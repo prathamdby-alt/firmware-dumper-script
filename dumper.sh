@@ -1123,8 +1123,8 @@ rm -rf "${TMPDIR}" 2>/dev/null
 
 if [[ -s "${PROJECT_DIR}"/.github_token ]]; then
 	GITHUB_TOKEN=$(< "${PROJECT_DIR}"/.github_token)	# Write Your Github Token In a Text File
-	[[ -z "$(git config --get user.email)" ]] && git config user.email "neilchetty4559@gmail.com"
-	[[ -z "$(git config --get user.name)" ]] && git config user.name "neilchetty"
+	[[ -z "$(git config --get user.email)" ]] && git config user.email "144875252+prathamdubey2005-alt@users.noreply.github.com"
+	[[ -z "$(git config --get user.name)" ]] && git config user.name "prathamdubey2005-alt"
 	if [[ -s "${PROJECT_DIR}"/.github_orgname ]]; then
 		GIT_ORG=$(< "${PROJECT_DIR}"/.github_orgname)	# Set Your Github Organization Name
 	else
@@ -1187,7 +1187,7 @@ if [[ -s "${PROJECT_DIR}"/.github_token ]]; then
 		if [[ -s "${PROJECT_DIR}"/.tg_chat ]]; then		# TG Channel ID
 			CHAT_ID=$(< "${PROJECT_DIR}"/.tg_chat)
 		else
-			CHAT_ID="@neil_dumps"
+			CHAT_ID="@PrathamsDumps"
 		fi
 		printf "Sending telegram notification...\n"
 		printf "<b>Brand: %s</b>" "${brand}" >| "${OUTDIR}"/tg.html
@@ -1234,8 +1234,8 @@ elif [[ -s "${PROJECT_DIR}"/.gitlab_token ]]; then
 	git config --global http.postBuffer 524288000		# A Simple Tuning to Get Rid of curl (18) error while `git push`
 	git checkout -b "${branch}" || { git checkout -b "${incremental}" && export branch="${incremental}-$RANDOM"; }
 	[[ ! -s .gitignore ]] && rm .gitignore
-	[[ -z "$(git config --get user.email)" ]] && git config user.email "neilchetty4559@gmail.com"
-	[[ -z "$(git config --get user.name)" ]] && git config user.name "neilchetty"
+	[[ -z "$(git config --get user.email)" ]] && git config user.email "14635515-prathamdubey2005@users.noreply.gitlab.com"
+	[[ -z "$(git config --get user.name)" ]] && git config user.name "prathamdubey2005"
 	git add --all
 
 	# Create Subgroup
@@ -1327,7 +1327,7 @@ elif [[ -s "${PROJECT_DIR}"/.gitlab_token ]]; then
 		if [[ -s "${PROJECT_DIR}"/.tg_chat ]]; then		# TG Channel ID
 			CHAT_ID=$(< "${PROJECT_DIR}"/.tg_chat)
 		else
-			CHAT_ID="@neil_dumps"
+			CHAT_ID="@PrathamsDumps"
 		fi
 		printf "Sending telegram notification...\n"
 		printf "<b>Brand: %s</b>" "${brand}" >| "${OUTDIR}"/tg.html
