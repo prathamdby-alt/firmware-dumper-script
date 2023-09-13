@@ -1236,7 +1236,7 @@ elif [[ -s "${PROJECT_DIR}"/.gitlab_token ]]; then
 	[[ ! -s .gitignore ]] && rm .gitignore
 	[[ -z "$(git config --get user.email)" ]] && git config user.email "14635515-prathamdubey2005@users.noreply.gitlab.com"
 	[[ -z "$(git config --get user.name)" ]] && git config user.name "prathamdubey2005"
-	git add --all
+	# git add --all
 
 	# Create Subgroup
 	GRP_ID=$(curl -s --request GET --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" "${GITLAB_HOST}/api/v4/groups/${GIT_ORG}" | jq -r '.id')
