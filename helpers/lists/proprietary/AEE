@@ -1,0 +1,6 @@
+vendor/lib/libaedv.so
+vendor/lib/libladder.so
+vendor/lib/libudf.so
+vendor/lib64/libaedv.so
+vendor/lib64/libladder.so
+vendor/lib64/libudf.so

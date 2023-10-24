@@ -2,10 +2,14 @@ vendor/bin/DR_AP_Service
 vendor/bin/garden_app
 vendor/bin/loc_launcher
 vendor/bin/lowi-server
+vendor/bin/mtk_agpsd
 vendor/bin/slim_daemon
 vendor/bin/xtra-daemon
 vendor/etc/cacert_location.pem
+vendor/etc/init/mtk_agpsd_p.rc
+vendor/etc/slp_conf
 vendor/etc/xtra_root_cert.pem
+vendor/lib/hw/gps.default.so
 vendor/lib/libDRPlugin.so
 vendor/lib/lib_drplugin_server.so
 vendor/lib/libbatching.so
@@ -22,6 +26,8 @@ vendor/lib/libslimclient.so
 vendor/lib/libulp2.so
 vendor/lib/libxtadapter.so
 vendor/lib/libxtwifi_ulp_adaptor.so
+vendor/lib64/hw/gps.default.so
+vendor/lib64/libDR.so
 vendor/lib64/libDRPlugin.so
 vendor/lib64/lib_drplugin_server.so
 vendor/lib64/libbatching.so

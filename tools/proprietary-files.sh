@@ -67,6 +67,23 @@ get_hardware_module() {
     done
 }
 
+# AAL
+search_blobs | grep -iE "vendor/lib|vendor/lib64" | grep -i "aal" | add_to_section AAL
+
+# AEE
+aee_targets=(
+    "hardware.aee"
+)
+search_blobs | get_hardware_module "${aee_targets[@]}" | add_to_section AEE
+search_blobs | grep "vendor/" | grep -i "aee" | add_to_section AEE
+
+# APU
+apu_targets=(
+    "hardware.apu"
+)
+search_blobs | get_hardware_module "${apu_targets[@]}" | add_to_section APU
+search_blobs | grep "vendor/" | grep -i "apu" | grep -iv "audio" | add_to_section APU
+
 # ADSP
 search_blobs | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | add_to_section ADSP
 search_blobs | grep -iE "odm/lib/|odm/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | add_to_section ADSP
@@ -98,7 +115,11 @@ search_blobs | get_hardware_module "${atrace_targets[@]}" | add_to_section Atrac
 
 # Audio
 search_blobs | grep -iE "etc/permissions/audiosphere.xml|framework/audiosphere.jar" | add_to_section Audio
-search_blobs | grep "vendor/" | grep -iE "libtinycompress|tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | add_to_section Audio
+search_blobs | grep "vendor/" | grep -iE "libtinycompress|tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | grep -v "soundfx" | add_to_section Audio
+search_blobs | grep "vendor/" | grep -i "atci" | add_to_section Audio
+search_blobs | grep -iE "vendor/lib/|vendor/lib64/" | grep -i "speech" | add_to_section Audio
+search_blobs | grep "vendor/" | grep -iE "misound" | grep -iEv "soundfx/" | add_to_section Audio
+search_blobs | grep "vendor/bin/" | grep -iE "calibration" | add_to_section Audio
 search_blobs | grep "odm/" | grep -iE "awinic|libhaptic|libdirac|etc/dirac" | add_to_section Audio
 
 # Audio-ACDB
@@ -110,11 +131,16 @@ search_blobs | grep -iE "odm/etc/audio" | add_to_section Audio-configs
 
 # Audio-Hardware
 audio_targets=(
+    "hardware.atci"
     "hardware.audio"
     "hw/audio"
 )
 search_blobs | get_hardware_module "${audio_targets[@]}" | grep -v "bluetooth" | add_to_section Audio-Hardware
 search_blobs | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libaudio_log_utils.so|libtinycompress_vendor.so|libqcompostprocbundle.so|libqcomvisualizer.so|libqcomvoiceprocessing.so|libvolumelistener.so" | add_to_section Audio-Hardware
+search_blobs | grep -iE "vendor/lib/|vendor/lib64/" | grep -i "atci" | add_to_section Audio-Hardware
+
+# Audio-SoundFX
+search_blobs | grep -iE "vendor/lib/soundfx|vendor/lib64/soundfx" | add_to_section Audio-SoundFX
 
 # Bluetooth
 bluetooth_targets=(
@@ -128,6 +154,19 @@ search_blobs | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|w
 
 # Bluetooth-AptX
 search_blobs | grep -iE "aptx" | grep -v "lib/rfsa/adsp" | add_to_section Bluetooth-AptX
+
+# Bootctrl
+bootctrl_targets=(
+    "hardware.boot"
+)
+search_blobs | get_hardware_module "${bootctrl_targets[@]}" | add_to_section Bootctrl
+search_blobs | grep "vendor/" | grep -iE "bootctrl|libmtk_bsg|mtk_plpath" | add_to_section Bootctrl
+
+# CAS
+cas_targets=(
+    "hardware.cas"
+)
+search_blobs | get_hardware_module "${cas_targets[@]}" | add_to_section CAS
 
 # Camera blobs
 camera_targets=(
@@ -152,13 +191,28 @@ search_blobs | grep "odm/" | grep -iE "libml_util|liblvimfs|libmpbase|libnp|lib_
 search_blobs | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | grep -v "motorola" | add_to_section Camera-motor
 search_blobs | grep -iE "vendor/lib/libois|vendor/lib64/libois" | add_to_section Camera-ois
 search_blobs | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | add_to_section Camera-sensors
+search_blobs | grep "vendor/" | grep -iE "camerahalserver" | add_to_section Camera
+search_blobs | grep -iE "vendor/lib|vendor/lib64" | grep -iE "_raw_|libfeature" | add_to_section Camera
+search_blobs | grep -iE "vendor/|odm/" | grep -ie "lib3a" | add_to_section Camera
 
 # CDSP
 search_blobs | grep "vendor/" | grep -iE "cdsprpc|libcdsp|libsdsprpc|libfastrpc|libsdsprpc|libsysmon" | add_to_section CDSP
 
+# Certs
+search_blobs | grep "vendor/etc/" | grep -i "certs" | add_to_section Certs
+
+# Charge
+charge_targets=(
+    "hardware.charge"
+)
+search_blobs | get_hardware_module "${charge_targets[@]}" | add_to_section Charge
+
 # Charger
 search_blobs | grep -iE "vendor/bin/hvdcp_opti|vendor/charge/chargemon/" | add_to_section Charger
 search_blobs | grep -iE "bin/kpoc_charger|lib/libshowlogo.so|etc/init/kpoc_charger.rc" | add_to_section Charger
+
+# Chipinfo
+search_blobs | grep "vendor/" | grep -i "chipinfo" | add_to_section Chipinfo
 
 # Configstore
 configstore_targets=(
@@ -170,6 +224,7 @@ search_blobs | get_hardware_module "${configstore_targets[@]}" | add_to_section 
 # Consumerir
 consumerir_targets=(
     "hardware.consumerir"
+    "hardware.ir"
     "hw/consumerir"
 )
 search_blobs | get_hardware_module "${consumerir_targets[@]}" | add_to_section Consumerir
@@ -202,6 +257,7 @@ search_blobs | grep -iE "vendor/etc/qdcm_calib" | add_to_section Display-calibra
 # Display-Hardware
 display_targets=(
     "frameworks.bufferhub"
+    "hardware.composer"
     "hardware.display"
     "hardware.graphics"
     "hardware.memtrack"
@@ -213,6 +269,13 @@ display_targets=(
 search_blobs | get_hardware_module "${display_targets[@]}" | add_to_section Display-Hardware
 search_blobs | grep -iE "lib/|lib64/" | grep -iE "libsdm-disp-apis.so" | add_to_section Display-Hardware
 search_blobs | grep "vendor/" | grep -iE "android.hardware.gpu" | add_to_section Power-Hardware
+
+# Doeapp
+doeapp_targets=(
+    "hardware.dplanner"
+)
+search_blobs | get_hardware_module "${doeapp_targets[@]}" | add_to_section Doeapp
+search_blobs | grep "vendor/" | grep -iE "doeapp|dexecutor|dtc_vendor" | add_to_section Doeapp
 
 # Dolby
 search_blobs | grep "vendor/" | grep -iE "dolby" | add_to_section Dolby
@@ -242,14 +305,33 @@ search_blobs | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/|lib/li
 # DTS
 search_blobs | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | add_to_section DTS
 
+# Dumpstate
+dumpstate_targets=(
+    "hardware.dumpstate"
+)
+search_blobs | get_hardware_module "${dumpstate_targets[@]}" | add_to_section Dumpstate
+
 # ESE-Powermanager
 search_blobs | grep -iE "lib/|lib64/|vendor/" | grep -iE "esepowermanager" | add_to_section ESE-Powermanager
 
+# Engineer-Mode
+em_targets=(
+    "hardware.engineermode"
+)
+search_blobs | get_hardware_module "${em_targets[@]}" | add_to_section Engineer-Mode
+search_blobs | grep "vendor/" | grep -i "em_hidl" | add_to_section Engineer-Mode
+
 # Factory
 factory_targets=(
+    "interfaces.customNvService"
+    "interfaces.factory"
     "vendor.qti.hardware.factory"
 )
-search_blobs | get_hardware_module "${factory_targets[@]}" | add_to_section Factory
+search_blobs | grep "vendor/" | get_hardware_module "${factory_targets[@]}" | add_to_section Factory
+search_blobs | grep "vendor/" | grep -i "factory" | add_to_section Factory
+
+# Factory-Configs
+search_blobs | grep -iE "vendor/etc/mmigroup" | add_to_section Factory-Configs
 
 # Fido
 search_blobs | grep "vendor/" | grep -iE "fido" | add_to_section Fido
@@ -281,6 +363,7 @@ gatekeeper_targets=(
     "hw/gatekeeper"
 )
 search_blobs | get_hardware_module "${gatekeeper_targets[@]}" | add_to_section Gatekeeper
+search_blobs | grep -iE "vendor/lib|vendor/lib64" | grep -iE "gatekeeper." | add_to_section Gatekeeper
 
 # Google
 search_blobs | grep "vendor/" | grep -iE "google" | grep -v "etc/media_codecs_google" | add_to_section Google
@@ -295,6 +378,9 @@ gps_targets=(
 search_blobs | get_hardware_module "${gps_targets[@]}" | add_to_section GPS
 search_blobs | grep -iE "etc/permissions/com.qti.location.sdk.xml|etc/permissions/com.qualcomm.location.xml|etc/permissions/izat.xt.srv.xml|etc/permissions/privapp-permissions-com.qualcomm.location.xml|framework/com.qti.location.sdk.jar|framework/izat.xt.srv.jar|lib64/liblocationservice_jni.so|lib64/libxt_native.so" | add_to_section GPS
 search_blobs | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation" | add_to_section GPS
+
+# GPS-Configs
+search_blobs | grep -iE "vendor/etc/gnss" | add_to_section GPS-Configs
 
 # Graphics
 graphics_targets=(
@@ -326,7 +412,7 @@ keymaster_targets=(
     "hw/keystore"
 )
 search_blobs | get_hardware_module "${keymaster_targets[@]}" | add_to_section Keymaster
-search_blobs | grep "vendor/" | grep -iE "keymaster|keystore|libspcom" | add_to_section Keymaster
+search_blobs | grep "vendor/" | grep -iE "keymaster|keystore|libspcom|kmsetkey|libsoft_attestation_cert" | add_to_section Keymaster
 search_blobs | grep "odm/" | grep -iE "libtrustonic_keybox_ca" | add_to_section Keymaster
 
 # Latency
@@ -352,19 +438,26 @@ listen_targets=(
 search_blobs | get_hardware_module "${listen_targets[@]}" | add_to_section Listen
 search_blobs | grep "vendor/" | grep -iE "liblisten" | add_to_section Listen
 
+# Log
+log_targets=(
+    "hardware.log"
+)
+search_blobs | get_hardware_module "${log_targets[@]}" | add_to_section Log
+search_blobs | grep "vendor/" | grep -i "loghidl" | add_to_section Log
+
 # Machine-Learning
 search_blobs | grep "vendor/" | grep -iE "mlshal" | add_to_section Machine-Learning
 
 # Media
 media_targets=(
+    "hardware.media"
     "vendor.qti.hardware.vpp"
 )
 search_blobs | get_hardware_module "${media_targets[@]}" | add_to_section Media
 search_blobs | grep -iE "lib/|lib64/" | grep -iE "extractors/libmmparser.so|libFileMux.so|libOmxMux.so|libmmosal.so|ibmmparser_lite.so|libmmrtpdecoder.so|libmmrtpencoder.so" | add_to_section Media
 search_blobs | grep "vendor/" | grep -iE "libvpp" | add_to_section Media
-
-# Mediatek
-search_blobs | grep "vendor/" | grep -iE "mediatek|libmtk" | add_to_section Mediatek
+search_blobs | grep "vendor/" | grep -iE "libstagefright|codec" | add_to_section Media
+search_blobs | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libgz|hevc|libh264dec|libhdr|libimage|libjpeg|libmp3|libmp4" | add_to_section Media
 
 # Meizu
 search_blobs | grep "vendor/" | grep -iE "meizu" | add_to_section Meizu
@@ -382,6 +475,18 @@ search_blobs | get_hardware_module "${nfc_targets[@]}" | add_to_section NFC
 search_blobs | grep -v "vendor/" | grep -iE "app/NxpNfcNci/NxpNfcNci.apk|app/NxpSecureElement/NxpSecureElement.apk|etc/nfcee_access.xml|etc/permissions/com.nxp.nfc.xml|framework/com.nxp.nfc.jar|libnxpnfc" | add_to_section NFC
 search_blobs | grep "vendor/" | grep -iE "libpn5|nfc|secure_element|etc/libese|nxp|libp61|ls_client" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
 search_blobs | grep "odm/" | grep -iE "libpn5|nfc|secure_element|etc/libese|etc/sn100u|etc/init/init.SN100|nxp|libp61|ls_client|jcos_nq|ese_spi|ls_nq|se_nq|libchrome" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
+
+# NVRAM
+nvram_targets=(
+    "hardware.nvram"
+)
+search_blobs | get_hardware_module "${nvram_targets[@]}" | add_to_section NVRAM
+
+# Network-Optimisation
+nwk_targets=(
+    "hardware.nwk_opt"
+)
+search_blobs | get_hardware_module "${nwk_targets[@]}" | add_to_section Network-Optimisation
 
 # Neural-networks
 nn_targets=(
@@ -405,6 +510,12 @@ search_blobs | grep "odm/" | grep -iE "oplus|ffmpeg|orms|libav|libdav|libsw|dpse
 
 # Oplus
 search_blobs | grep "vendor/" | grep -iE "oplus" | add_to_section Oplus
+
+# PQ
+pq_targets=(
+    "hardware.pq"
+)
+search_blobs | get_hardware_module "${pq_targets[@]}" | add_to_section PQ
 
 # Pasrmanager
 search_blobs | grep "vendor/" | grep -iE "pasrmanager" | add_to_section Pasrmanager
@@ -435,6 +546,7 @@ search_blobs | get_hardware_module "${postprocessing_targets[@]}" | add_to_secti
 
 # Power-Hardware
 power_targets=(
+    "hardware.mtkpower"
     "hardware.power"
     "hw/power"
 )
@@ -454,17 +566,29 @@ search_blobs | grep "vendor/" | grep -iE "libqmi" | add_to_section QMI
 
 # Radio
 radio_targets=(
+    "hardware.mdmonitor"
+    "hardware.mtkradio"
+    "hardware.mms"
+    "hardware.netdagent"
     "hardware.radio"
 )
 search_blobs | get_hardware_module "${radio_targets[@]}" | grep -v "ims" | add_to_section Radio
 search_blobs | grep -iE "app/QtiTelephonyService/QtiTelephonyService.apk|app/datastatusnotification/datastatusnotification.apk|app/embms/embms.apk|etc/permissions/embms.xml|etc/permissions/privapp-permissions-qti.xml|etc/permissions/qcrilhook.xml|etc/permissions/telephonyservice.xml|etc/sysconfig/qti_whitelist.xml|priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk" | add_to_section Radio
 search_blobs | grep "framework/" | grep -iE "QtiTelephonyServicelibrary|embmslibrary|qcnvitems|qcrilhook|qti-telephony-common" | grep ".jar" | add_to_section Radio
 search_blobs | grep "vendor/" | grep -iE "radio/" | grep -v "vendor.qti.hardware.radio.ims" | add_to_section Radio
+search_blobs | grep "vendor/" | grep -iE "netmgr|ril|gsm" | add_to_section Radio
 
 # Radio-IMS
 radioims_targets=(
     "com.qualcomm.qti.imscmservice"
     "com.qualcomm.qti.uceservice"
+    "hardware.clientapi"
+    "hardware.dmc"
+    "hardware.lbs"
+    "hardware.mmagent"
+    "hardware.rcs"
+    "hardware.videotelephony"
+    "hw/vtservice"
     "radio.ims"
     "qti.ims"
 )
@@ -474,6 +598,11 @@ search_blobs | grep -iE "framework/qti-vzw-ims-internal" | add_to_section Radio-
 search_blobs | grep -iE "lib/|lib64" | grep -iE "libdiag_system.so|librcc.so|lib-ims|libimscamera_jni|libimsmedia_jni|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | add_to_section Radio-IMS
 search_blobs | grep -iE "priv-app/ims/ims.apk|priv-app/imssettings/imssettings.apk|vendor/bin/ims_rtp_daemon|vendor/bin/imsdatadaemon|vendor/bin/imsqmidaemon|vendor/bin/imsrcsd|vendor/bin/ims_rtp_daemon" | add_to_section Radio-IMS
 search_blobs | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|lib-ims" | add_to_section Radio-IMS
+search_blobs | grep "vendor/" | grep -iE "volte|rcs" | add_to_section Radio-IMS
+
+# Radio-Configs
+search_blobs | grep -iE "vendor/etc/mdota" | add_to_section Radio-Configs
+search_blobs | grep -iE "vendor/etc/" | grep -iE "ecc|apdb|spn|apn|smsdb|nhw|pws|mnl" | grep -v "seccomp_policy/" | add_to_section Radio-Configs
 
 # Samsung
 search_blobs | grep "vendor/" | grep -iE "samsung|SoundAlive" | grep -v "vendor/etc/qdcm_calib" | grep -v "vendor/etc/dsi" | grep -v "vendor/firmware/" | add_to_section Samsung
@@ -487,6 +616,7 @@ search_blobs | grep "vendor/" | grep -iE "seccam" | add_to_section Seccam
 
 # Sensors
 sensors_targets=(
+    "frameworks.sensorservice"
     "hardware.sensors"
     "hw/activity_recognition"
     "hw/sensors"
@@ -518,8 +648,24 @@ search_blobs | grep "vendor/" | grep -iE "soter" | add_to_section Soter
 # SSR
 search_blobs | grep "vendor/" | grep -iE "bin/ssr_|subsystem" | add_to_section SSR
 
+# TEE
+tee_targets=(
+    "hardware.thh"
+    "trustonic.tee"
+)
+search_blobs | get_hardware_module "${tee_targets[@]}" | add_to_section TEE
+search_blobs | grep -iE "vendor/lib|vendor/lib64" | grep -iE "tee|microtrust|trustonic|beanpod|mcDriver|libMc" | add_to_section TEE
+search_blobs | grep -iE "vendor/bin" | grep -iE "teei_|mcDriver" | add_to_section TEE
+
+# TEE-McRegistry
+search_blobs | grep -i "vendor/app/mcRegistry" | add_to_section TEE-mcRegistry
+
+# TEE-TA
+search_blobs | grep -i "vendor/thh/ta" | add_to_section TEE-TA
+
 # Thermal
 search_blobs | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal|bin/mi_thermald|thermal" | grep -v "hw/thermal" | add_to_section Thermal
+search_blobs | grep "vendor/etc/.tp" | add_to_section Thermal
 
 # Thermal-Hardware
 search_blobs | grep "vendor/" | grep -iE "lib/hw/thermal|lib64/hw/thermal" | add_to_section Thermal-Hardware
@@ -539,6 +685,12 @@ search_blobs | grep "vendor/" | grep -iE "tui_comm" | add_to_section TUI
 
 # UBWC
 search_blobs | grep "vendor/" | grep -iE "libUBWC.so|libstreamparser.so" | add_to_section UBWC
+
+# USB
+usb_targets=(
+    "hardware.usb"
+)
+search_blobs | get_hardware_module "${usb_targets[@]}" | add_to_section USB
 
 # Vibrator
 vibrator_targets=(
@@ -580,6 +732,8 @@ search_blobs | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdco
 
 # WiFi
 wifi_targets=(
+    "hardware.apmonitor"
+    "hardware.tetheroffload"
     "hardware.wifi"
     "hardware.wigig"
 )

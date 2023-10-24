@@ -22,8 +22,10 @@ vendor/lib/libsecureui_svcsock.so
 vendor/lib/libsi.so
 vendor/lib/libspl.so
 vendor/lib/libssd.so
+vendor/lib/libtlcWidevineModularDrm.so
 vendor/lib/libtzdrmgenprov.so
 vendor/lib/libtzplayready.so
+vendor/lib/liburee_meta_drmkeyinstall.so
 vendor/lib64/libGPQTEEC_vendor.so
 vendor/lib64/libGPTEE_vendor.so
 vendor/lib64/libGPreqcancel.so
@@ -47,5 +49,7 @@ vendor/lib64/libsecureui_svcsock.so
 vendor/lib64/libsi.so
 vendor/lib64/libspl.so
 vendor/lib64/libssd.so
+vendor/lib64/libtlcWidevineModularDrm.so
 vendor/lib64/libtzdrmgenprov.so
 vendor/lib64/libtzplayready.so
+vendor/lib64/liburee_meta_drmkeyinstall.so

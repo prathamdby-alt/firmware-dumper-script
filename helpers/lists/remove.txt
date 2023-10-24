@@ -1,6 +1,13 @@
+boot/ramdisk/
+recovery/ramdisk/
 system_ext/etc/mmi/
+system_ext/etc/nano/
 system_ext/etc/selinux/
+system_ext/etc/terminfo/
 system_ext/etc/vintf/
+system_ext/lib/android.hidl.
+system_ext/lib64/android.hidl.
+system_ext/usr/share/vim/
 vendor/bin/hw/android.hardware.audio@
 vendor/bin/hw/android.hardware.authsecret@
 vendor/bin/hw/android.hardware.boot@
@@ -125,6 +132,7 @@ vendor/lib/hw/memtrack.
 vendor/lib/hw/nfc_nci.nqx.default.so
 vendor/lib/hw/thermal.
 vendor/lib/hw/vr.default.so
+vendor/lib/libprotobuf-cpp
 vendor/lib/libqsap_sdk.so
 vendor/lib/modules/
 vendor/lib/vendor.display.config@
@@ -175,6 +183,7 @@ vendor/lib64/hw/memtrack.
 vendor/lib64/hw/nfc_nci.nqx.default.so
 vendor/lib64/hw/thermal.
 vendor/lib64/hw/vr.default.so
+vendor/lib64/libprotobuf-cpp
 vendor/lib64/libqsap_sdk.so
 vendor/lib64/modules/
 vendor/lib64/nfc_nci.nqx.default.hw.so
@@ -187,8 +196,11 @@ vendor/lib64/vendor.qti.hardware.wifi
 vendor/lib64/vendor.qti.hardware.wigig
 vendor/media/
 vendor/odm/
+vendor/odm_dlkm/
 vendor/overlay/
 vendor/package/
 vendor/rfs/
 vendor/speccfg/
 vendor/usr/
+vendor/vendor_dlkm/
+vendor_boot/ramdisk/
